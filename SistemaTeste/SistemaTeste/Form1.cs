@@ -7,11 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
+using MySqlConnector.Authentication;
 
 namespace SistemaTeste
 {
     public partial class FrmPrincipal : Form
     {
+        Conexao conexao = new Conexao();
+        string sql;
+        MySqlCommand cmd;
+
         public FrmPrincipal()
         {
             InitializeComponent();
@@ -31,6 +37,16 @@ namespace SistemaTeste
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
+            conexao.AbrirConexao();
+            sql = "INSERT INTO cliente (nome, endereco, cpf, telefone) VALUES(@nome, @endereco, @cpf, @telefone)";
+            cmd = new MySqlCommand(sql, conexao.con);
+            cmd.Parameters.AddWithValue("@nome", txtNome.Text);
+            cmd.Parameters.AddWithValue("@endereco", txtEndereco.Text);
+            cmd.Parameters.AddWithValue("@cpf", txtCpf.Text);
+            cmd.Parameters.AddWithValue("@telefone", txtTelefone.Text);
+            cmd.ExecuteNonQuery();
+            conexao.FecharConexao();
+
             DesabilitarBotoes();
             DesabilitarCampos();
             LimparCampos();
