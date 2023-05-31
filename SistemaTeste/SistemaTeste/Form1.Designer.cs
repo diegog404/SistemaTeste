@@ -41,6 +41,11 @@
             this.btnSalvar = new System.Windows.Forms.Button();
             this.btnExcluir = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
+            this.btnAlterar = new System.Windows.Forms.Button();
+            this.txtBusca = new System.Windows.Forms.TextBox();
+            this.lblBusca = new System.Windows.Forms.Label();
+            this.Grid = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.Grid)).BeginInit();
             this.SuspendLayout();
             // 
             // lblNome
@@ -86,7 +91,6 @@
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(263, 20);
             this.txtNome.TabIndex = 4;
-            this.txtNome.TextChanged += new System.EventHandler(this.txtNome_TextChanged);
             // 
             // txtEndereco
             // 
@@ -100,6 +104,7 @@
             // 
             this.txtCpf.Enabled = false;
             this.txtCpf.Location = new System.Drawing.Point(86, 135);
+            this.txtCpf.Mask = "000,000,000-00";
             this.txtCpf.Name = "txtCpf";
             this.txtCpf.Size = new System.Drawing.Size(141, 20);
             this.txtCpf.TabIndex = 6;
@@ -150,7 +155,7 @@
             // 
             this.btnExcluir.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExcluir.ForeColor = System.Drawing.Color.Indigo;
-            this.btnExcluir.Location = new System.Drawing.Point(205, 238);
+            this.btnExcluir.Location = new System.Drawing.Point(286, 238);
             this.btnExcluir.Name = "btnExcluir";
             this.btnExcluir.Size = new System.Drawing.Size(75, 23);
             this.btnExcluir.TabIndex = 11;
@@ -162,7 +167,7 @@
             // 
             this.btnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancelar.ForeColor = System.Drawing.Color.Indigo;
-            this.btnCancelar.Location = new System.Drawing.Point(286, 238);
+            this.btnCancelar.Location = new System.Drawing.Point(367, 238);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 12;
@@ -170,12 +175,53 @@
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
+            // btnAlterar
+            // 
+            this.btnAlterar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAlterar.ForeColor = System.Drawing.Color.Indigo;
+            this.btnAlterar.Location = new System.Drawing.Point(205, 238);
+            this.btnAlterar.Name = "btnAlterar";
+            this.btnAlterar.Size = new System.Drawing.Size(75, 23);
+            this.btnAlterar.TabIndex = 13;
+            this.btnAlterar.Text = "Alterar";
+            this.btnAlterar.UseVisualStyleBackColor = true;
+            this.btnAlterar.Click += new System.EventHandler(this.btnAlterar_Click);
+            // 
+            // txtBusca
+            // 
+            this.txtBusca.Enabled = false;
+            this.txtBusca.Location = new System.Drawing.Point(486, 81);
+            this.txtBusca.Name = "txtBusca";
+            this.txtBusca.Size = new System.Drawing.Size(291, 20);
+            this.txtBusca.TabIndex = 14;
+            // 
+            // lblBusca
+            // 
+            this.lblBusca.AutoSize = true;
+            this.lblBusca.Location = new System.Drawing.Point(440, 84);
+            this.lblBusca.Name = "lblBusca";
+            this.lblBusca.Size = new System.Drawing.Size(40, 13);
+            this.lblBusca.TabIndex = 15;
+            this.lblBusca.Text = "Busca:";
+            // 
+            // Grid
+            // 
+            this.Grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.Grid.Location = new System.Drawing.Point(43, 279);
+            this.Grid.Name = "Grid";
+            this.Grid.Size = new System.Drawing.Size(734, 150);
+            this.Grid.TabIndex = 16;
+            // 
             // FrmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Indigo;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 439);
+            this.Controls.Add(this.Grid);
+            this.Controls.Add(this.lblBusca);
+            this.Controls.Add(this.txtBusca);
+            this.Controls.Add(this.btnAlterar);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnExcluir);
             this.Controls.Add(this.btnSalvar);
@@ -192,6 +238,7 @@
             this.Name = "FrmPrincipal";
             this.Text = "Principal";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.Grid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -212,6 +259,10 @@
         private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.Button btnExcluir;
         private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.Button btnAlterar;
+        private System.Windows.Forms.TextBox txtBusca;
+        private System.Windows.Forms.Label lblBusca;
+        private System.Windows.Forms.DataGridView Grid;
     }
 }
 

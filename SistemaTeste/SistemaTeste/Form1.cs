@@ -23,6 +23,23 @@ namespace SistemaTeste
             InitializeComponent();
         }
 
+        private void FormatarGrid()
+        {
+            Grid.Columns[0].HeaderText = "Código:";
+            Grid.Columns[1].HeaderText = "Nome:";
+            Grid.Columns[2].HeaderText = "End.:";
+            Grid.Columns[3].HeaderText = "Cpf:";
+            Grid.Columns[4].HeaderText = "Telefone:";
+            Grid.Columns[5].HeaderText = "Celular:";
+        }
+
+        private void ListarGrid()
+        {
+            conexao.AbrirConexao();
+            sql = "Select * FROM 'cliente' ORDER BY NOME ASC";
+
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             DesabilitarBotoes();
@@ -37,6 +54,21 @@ namespace SistemaTeste
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
+            if(txtNome.Text.ToString().Trim() == "")
+            {
+                MessageBox.Show("Digite o nome");
+                txtNome.Text = "";
+                txtNome.Focus();
+                return;
+            }
+            if (txtCpf.Text == "   .   .   -" || txtCpf.Text.Length < 14)
+            {
+                MessageBox.Show("Digite o cpf");
+                txtCpf.Text = "";
+                txtCpf.Focus();
+                return;
+            }
+
             conexao.AbrirConexao();
             sql = "INSERT INTO cliente (nome, endereco, cpf, telefone) VALUES(@nome, @endereco, @cpf, @telefone)";
             cmd = new MySqlCommand(sql, conexao.con);
@@ -64,11 +96,6 @@ namespace SistemaTeste
             DesabilitarBotoes();
             DesabilitarCampos();
             LimparCampos();
-        }
-
-        private void txtNome_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void DesabilitarBotoes()
@@ -112,6 +139,38 @@ namespace SistemaTeste
             txtEndereco.Clear();
             txtCpf.Clear();
             txtTelefone.Clear();
+        }
+
+        private void btnAlterar_Click(object sender, EventArgs e)
+        {
+            if (txtNome.Text.ToString().Trim() == "")
+            {
+                MessageBox.Show("Digite o nome");
+                txtNome.Text = "";
+                txtNome.Focus();
+                return;
+            }
+            if (txtCpf.Text == "   .   .   -" || txtCpf.Text.Length < 14)
+            {
+                MessageBox.Show("Digite o cpf");
+                txtCpf.Text = "";
+                txtCpf.Focus();
+                return;
+            }
+
+            conexao.AbrirConexao();
+            sql = "UPDATE cliente SET nome = @nome, endereco = @endereco, cpf = @cpf, telefone = @telefone";
+            cmd = new MySqlCommand(sql, conexao.con);
+            cmd.Parameters.AddWithValue("@nome", txtNome.Text);
+            cmd.Parameters.AddWithValue("@endereco", txtEndereco.Text);
+            cmd.Parameters.AddWithValue("@cpf", txtCpf.Text);
+            cmd.Parameters.AddWithValue("@telefone", txtTelefone.Text);
+            cmd.ExecuteNonQuery();
+            conexao.FecharConexao();
+
+            DesabilitarBotoes();
+            DesabilitarCampos();
+            LimparCampos();
         }
     }
 }
