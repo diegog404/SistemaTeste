@@ -45,7 +45,11 @@
             this.txtBusca = new System.Windows.Forms.TextBox();
             this.lblBusca = new System.Windows.Forms.Label();
             this.Grid = new System.Windows.Forms.DataGridView();
+            this.lblFoto = new System.Windows.Forms.Label();
+            this.imagem = new System.Windows.Forms.PictureBox();
+            this.btnImg = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Grid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imagem)).BeginInit();
             this.SuspendLayout();
             // 
             // lblNome
@@ -189,11 +193,11 @@
             // 
             // txtBusca
             // 
-            this.txtBusca.Enabled = false;
             this.txtBusca.Location = new System.Drawing.Point(486, 81);
             this.txtBusca.Name = "txtBusca";
             this.txtBusca.Size = new System.Drawing.Size(291, 20);
             this.txtBusca.TabIndex = 14;
+            this.txtBusca.TextChanged += new System.EventHandler(this.txtBusca_TextChanged);
             // 
             // lblBusca
             // 
@@ -211,13 +215,45 @@
             this.Grid.Name = "Grid";
             this.Grid.Size = new System.Drawing.Size(734, 150);
             this.Grid.TabIndex = 16;
+            this.Grid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Grid_CellClick);
+            // 
+            // lblFoto
+            // 
+            this.lblFoto.AutoSize = true;
+            this.lblFoto.Location = new System.Drawing.Point(862, 52);
+            this.lblFoto.Name = "lblFoto";
+            this.lblFoto.Size = new System.Drawing.Size(28, 13);
+            this.lblFoto.TabIndex = 17;
+            this.lblFoto.Text = "Foto";
+            // 
+            // imagem
+            // 
+            this.imagem.Location = new System.Drawing.Point(904, 52);
+            this.imagem.Name = "imagem";
+            this.imagem.Size = new System.Drawing.Size(125, 130);
+            this.imagem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.imagem.TabIndex = 18;
+            this.imagem.TabStop = false;
+            // 
+            // btnImg
+            // 
+            this.btnImg.Location = new System.Drawing.Point(904, 188);
+            this.btnImg.Name = "btnImg";
+            this.btnImg.Size = new System.Drawing.Size(125, 23);
+            this.btnImg.TabIndex = 19;
+            this.btnImg.Text = "Buscar imagem";
+            this.btnImg.UseVisualStyleBackColor = true;
+            this.btnImg.Click += new System.EventHandler(this.btnImg_Click);
             // 
             // FrmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Indigo;
-            this.ClientSize = new System.Drawing.Size(800, 439);
+            this.ClientSize = new System.Drawing.Size(1041, 439);
+            this.Controls.Add(this.btnImg);
+            this.Controls.Add(this.imagem);
+            this.Controls.Add(this.lblFoto);
             this.Controls.Add(this.Grid);
             this.Controls.Add(this.lblBusca);
             this.Controls.Add(this.txtBusca);
@@ -239,6 +275,7 @@
             this.Text = "Principal";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Grid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imagem)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -263,6 +300,9 @@
         private System.Windows.Forms.TextBox txtBusca;
         private System.Windows.Forms.Label lblBusca;
         private System.Windows.Forms.DataGridView Grid;
+        private System.Windows.Forms.Label lblFoto;
+        private System.Windows.Forms.PictureBox imagem;
+        private System.Windows.Forms.Button btnImg;
     }
 }
 

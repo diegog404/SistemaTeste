@@ -4,11 +4,14 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using MySqlConnector.Authentication;
+using System.Drawing;
+using System.IO;
 
 namespace SistemaTeste
 {
@@ -17,6 +20,10 @@ namespace SistemaTeste
         Conexao conexao = new Conexao();
         string sql;
         MySqlCommand cmd;
+        string id;
+
+        //var que recebe a img
+        string foto;
 
         public FrmPrincipal()
         {
@@ -31,19 +38,31 @@ namespace SistemaTeste
             Grid.Columns[3].HeaderText = "Cpf:";
             Grid.Columns[4].HeaderText = "Telefone:";
             Grid.Columns[5].HeaderText = "Celular:";
+            Grid.Columns[6].HeaderText = "Foto:";
+
+            Grid.Columns[6].Visible = false;
         }
 
         private void ListarGrid()
         {
             conexao.AbrirConexao();
-            sql = "Select * FROM 'cliente' ORDER BY NOME ASC";
+            sql = "Select * FROM cliente ORDER BY ID ASC";
 
+            cmd = new MySqlCommand(sql, conexao.con);
+            MySqlDataAdapter da = new MySqlDataAdapter();
+            da.SelectCommand = cmd;
+
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            Grid.DataSource = dt;
+            conexao.FecharConexao();
+
+            FormatarGrid();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            DesabilitarBotoes();
-            DesabilitarCampos();
+            ListarGrid();
         }
 
         private void btnNovo_Click(object sender, EventArgs e)
@@ -70,25 +89,49 @@ namespace SistemaTeste
             }
 
             conexao.AbrirConexao();
-            sql = "INSERT INTO cliente (nome, endereco, cpf, telefone) VALUES(@nome, @endereco, @cpf, @telefone)";
+            sql = "INSERT INTO cliente (nome, endereco, cpf, telefone, imagem) VALUES(@nome, @endereco, @cpf, @telefone, @imagem)";
             cmd = new MySqlCommand(sql, conexao.con);
+
+            cmd.Parameters.AddWithValue("@id", id);
             cmd.Parameters.AddWithValue("@nome", txtNome.Text);
             cmd.Parameters.AddWithValue("@endereco", txtEndereco.Text);
             cmd.Parameters.AddWithValue("@cpf", txtCpf.Text);
             cmd.Parameters.AddWithValue("@telefone", txtTelefone.Text);
+            cmd.Parameters.AddWithValue("@imagem", imagem);
             cmd.ExecuteNonQuery();
-            conexao.FecharConexao();
+            conexao.FecharConexao();            
 
             DesabilitarBotoes();
             DesabilitarCampos();
             LimparCampos();
+
+            //Atualiza a grid pelo método
+            ListarGrid();
+            MessageBox.Show("Cliente cadastrado com sucesso!", "Cadastro", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnExcluir_Click(object sender, EventArgs e)
         {
-            DesabilitarBotoes();
-            DesabilitarCampos();
-            LimparCampos();
+            var result = MessageBox.Show("Deseja excluir o cliente?", "Deletar cliente", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+
+            if(result == DialogResult.Yes)
+            {
+                conexao.AbrirConexao();
+                sql = "DELETE FROM cliente WHERE id = @id";
+                cmd = new MySqlCommand(sql, conexao.con);
+
+                cmd.Parameters.AddWithValue("@id", id);
+
+                cmd.ExecuteNonQuery();
+                conexao.FecharConexao();
+
+                DesabilitarBotoes();
+                DesabilitarCampos();
+                LimparCampos();
+
+                ListarGrid();
+                MessageBox.Show("Cliente deletado com sucesso!", "Cliente deletado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -104,6 +147,7 @@ namespace SistemaTeste
             btnCancelar.Enabled = false;
             btnSalvar.Enabled = false;
             btnExcluir.Enabled = false;
+            btnAlterar.Enabled = true;
         }
 
         private void HabilitarBotoes()
@@ -112,6 +156,7 @@ namespace SistemaTeste
             btnCancelar.Enabled = true;
             btnSalvar.Enabled = true;
             btnExcluir.Enabled = true;
+            btnAlterar.Enabled = true;
         }
 
         private void DesabilitarCampos()
@@ -159,18 +204,91 @@ namespace SistemaTeste
             }
 
             conexao.AbrirConexao();
-            sql = "UPDATE cliente SET nome = @nome, endereco = @endereco, cpf = @cpf, telefone = @telefone";
+            sql = "UPDATE cliente SET nome = @nome, endereco = @endereco, cpf = @cpf, telefone = @telefone WHERE id = @id";
             cmd = new MySqlCommand(sql, conexao.con);
+
+
             cmd.Parameters.AddWithValue("@nome", txtNome.Text);
             cmd.Parameters.AddWithValue("@endereco", txtEndereco.Text);
             cmd.Parameters.AddWithValue("@cpf", txtCpf.Text);
             cmd.Parameters.AddWithValue("@telefone", txtTelefone.Text);
             cmd.ExecuteNonQuery();
-            conexao.FecharConexao();
+            conexao.FecharConexao();            
 
             DesabilitarBotoes();
             DesabilitarCampos();
             LimparCampos();
+
+            //Atualiza a grid pelo método
+            ListarGrid();
+            MessageBox.Show("Cliente alterado com sucesso!", "Alteração", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        private void Grid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            HabilitarBotoes();
+            btnSalvar.Enabled = false;
+            HabilitarCampos();
+
+            id = Grid.CurrentRow.Cells[0].Value.ToString();
+            txtNome.Text = Grid.CurrentRow.Cells[1].Value.ToString();
+            txtEndereco.Text = Grid.CurrentRow.Cells[2].Value.ToString();
+            txtCpf.Text = Grid.CurrentRow.Cells[3].Value.ToString();
+            txtTelefone.Text = Grid.CurrentRow.Cells[4].Value.ToString();
+        }
+
+        private void BuscarNome()
+        {
+            conexao.AbrirConexao();
+            sql = "SELECT * FROM cliente WHERE nome LIKE @nome ORDER BY id ASC"; //LIKE faz uma busca nome por aproximação
+            cmd = new MySqlCommand(sql, conexao.con);
+            cmd.Parameters.AddWithValue("@nome", txtBusca.Text + "%"); //operador LIKE
+
+            MySqlDataAdapter da = new MySqlDataAdapter();
+            da.SelectCommand = cmd;
+
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            Grid.DataSource = dt;
+            conexao.FecharConexao();
+
+            FormatarGrid();
+        }
+
+        private void txtBusca_TextChanged(object sender, EventArgs e)
+        {
+            BuscarNome();
+        }
+
+        private void btnImg_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Imagens(*.jpg; *.png) | *.jpg; *.png"; //mostra apenas jpg e png
+
+            if(dialog.ShowDialog() == DialogResult.OK)
+            {
+                foto = dialog.FileName.ToString(); //pega o caminho da imagem
+                imagem.ImageLocation = foto;
+            }
+        }
+
+        //envia imagem ao banco
+        private byte[] Img()
+        {
+            if(foto == "")
+            {
+                return null;
+            }
+
+            byte[] imgByte = null;
+            FileStream fs = new FileStream(foto, FileMode.Open, FileAccess.Read);
+
+            BinaryReader br = new BinaryReader(fs);
+            imgByte = br.ReadBytes((int)fs.Length);
+
+            return imgByte;
+        }
+
+
     }
 }
