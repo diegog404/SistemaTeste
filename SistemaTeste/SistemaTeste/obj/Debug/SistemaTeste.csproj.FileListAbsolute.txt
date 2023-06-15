@@ -1,14 +1,6 @@
 C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\bin\Debug\SistemaTeste.exe.config
 C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\bin\Debug\SistemaTeste.exe
 C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\bin\Debug\SistemaTeste.pdb
-C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\obj\Debug\SistemaTeste.csproj.AssemblyReference.cache
-C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\obj\Debug\SistemaTeste.csproj.SuggestedBindingRedirects.cache
-C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\obj\Debug\SistemaTeste.FrmPrincipal.resources
-C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\obj\Debug\SistemaTeste.Properties.Resources.resources
-C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\obj\Debug\SistemaTeste.csproj.GenerateResource.cache
-C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\obj\Debug\SistemaTeste.csproj.CoreCompileInputs.cache
-C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\obj\Debug\SistemaTeste.exe
-C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\obj\Debug\SistemaTeste.pdb
 C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\bin\Debug\MySql.Data.dll
 C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\bin\Debug\MySqlConnector.dll
 C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\bin\Debug\System.Buffers.dll
@@ -27,4 +19,12 @@ C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\bin\Debug\System.Memory.xml
 C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\bin\Debug\System.Numerics.Vectors.xml
 C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\obj\Debug\SistemaTeste.csproj.AssemblyReference.cache
+C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\obj\Debug\SistemaTeste.csproj.SuggestedBindingRedirects.cache
+C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\obj\Debug\SistemaTeste.FrmPrincipal.resources
+C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\obj\Debug\SistemaTeste.Properties.Resources.resources
+C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\obj\Debug\SistemaTeste.csproj.GenerateResource.cache
+C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\obj\Debug\SistemaTeste.csproj.CoreCompileInputs.cache
 C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\obj\Debug\SistemaTeste.csproj.CopyComplete
+C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\obj\Debug\SistemaTeste.exe
+C:\SistemaC#\Projeto\SistemaTeste\SistemaTeste\obj\Debug\SistemaTeste.pdb

@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using MySqlConnector.Authentication;
-using System.Drawing;
 using System.IO;
 
 namespace SistemaTeste
@@ -62,7 +61,9 @@ namespace SistemaTeste
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            //carrega tudo ao abrir
             ListarGrid();
+            LimparFoto();
         }
 
         private void btnNovo_Click(object sender, EventArgs e)
@@ -97,7 +98,7 @@ namespace SistemaTeste
             cmd.Parameters.AddWithValue("@endereco", txtEndereco.Text);
             cmd.Parameters.AddWithValue("@cpf", txtCpf.Text);
             cmd.Parameters.AddWithValue("@telefone", txtTelefone.Text);
-            cmd.Parameters.AddWithValue("@imagem", imagem);
+            cmd.Parameters.AddWithValue("@imagem", image);
             cmd.ExecuteNonQuery();
             conexao.FecharConexao();            
 
@@ -106,6 +107,7 @@ namespace SistemaTeste
             LimparCampos();
 
             //Atualiza a grid pelo método
+            LimparFoto();
             ListarGrid();
             MessageBox.Show("Cliente cadastrado com sucesso!", "Cadastro", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -226,15 +228,37 @@ namespace SistemaTeste
 
         private void Grid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            HabilitarBotoes();
-            btnSalvar.Enabled = false;
-            HabilitarCampos();
+            if(e.RowIndex > -1)
+            {
+                LimparFoto();
 
-            id = Grid.CurrentRow.Cells[0].Value.ToString();
-            txtNome.Text = Grid.CurrentRow.Cells[1].Value.ToString();
-            txtEndereco.Text = Grid.CurrentRow.Cells[2].Value.ToString();
-            txtCpf.Text = Grid.CurrentRow.Cells[3].Value.ToString();
-            txtTelefone.Text = Grid.CurrentRow.Cells[4].Value.ToString();
+                HabilitarBotoes();
+                btnSalvar.Enabled = false;
+                HabilitarCampos();
+
+                id = Grid.CurrentRow.Cells[0].Value.ToString();
+                txtNome.Text = Grid.CurrentRow.Cells[1].Value.ToString();
+                txtEndereco.Text = Grid.CurrentRow.Cells[2].Value.ToString();
+                txtCpf.Text = Grid.CurrentRow.Cells[3].Value.ToString();
+                txtTelefone.Text = Grid.CurrentRow.Cells[4].Value.ToString();
+
+                //carrega a foto de um registro salvo
+                if (Grid.CurrentRow.Cells[6].Value != DBNull.Value)
+                {
+                    byte[] imageLoad = (byte[])Grid.Rows[e.RowIndex].Cells[6].Value;
+                    MemoryStream ms = new MemoryStream(imageLoad);
+
+                    image.Image = System.Drawing.Image.FromStream(ms);
+                }
+                else
+                {
+                    image.Image = Properties.Resources.perfil;
+                }
+            }
+            else
+            {
+                return;
+            }
         }
 
         private void BuscarNome()
@@ -268,7 +292,7 @@ namespace SistemaTeste
             if(dialog.ShowDialog() == DialogResult.OK)
             {
                 foto = dialog.FileName.ToString(); //pega o caminho da imagem
-                imagem.ImageLocation = foto;
+                image.ImageLocation = foto;
             }
         }
 
@@ -289,6 +313,11 @@ namespace SistemaTeste
             return imgByte;
         }
 
-
+        //metodo limpar foto
+        private void LimparFoto()
+        {
+            image.Image = Properties.Resources.perfil;
+            foto = "ft/perfil.png";
+        }
     }
 }

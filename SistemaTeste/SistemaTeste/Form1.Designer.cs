@@ -46,10 +46,10 @@
             this.lblBusca = new System.Windows.Forms.Label();
             this.Grid = new System.Windows.Forms.DataGridView();
             this.lblFoto = new System.Windows.Forms.Label();
-            this.imagem = new System.Windows.Forms.PictureBox();
+            this.image = new System.Windows.Forms.PictureBox();
             this.btnImg = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Grid)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imagem)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.image)).BeginInit();
             this.SuspendLayout();
             // 
             // lblNome
@@ -226,14 +226,16 @@
             this.lblFoto.TabIndex = 17;
             this.lblFoto.Text = "Foto";
             // 
-            // imagem
+            // image
             // 
-            this.imagem.Location = new System.Drawing.Point(904, 52);
-            this.imagem.Name = "imagem";
-            this.imagem.Size = new System.Drawing.Size(125, 130);
-            this.imagem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.imagem.TabIndex = 18;
-            this.imagem.TabStop = false;
+            this.image.Image = global::SistemaTeste.Properties.Resources.Image1;
+            this.image.InitialImage = global::SistemaTeste.Properties.Resources.Image1;
+            this.image.Location = new System.Drawing.Point(904, 52);
+            this.image.Name = "image";
+            this.image.Size = new System.Drawing.Size(125, 130);
+            this.image.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.image.TabIndex = 18;
+            this.image.TabStop = false;
             // 
             // btnImg
             // 
@@ -252,7 +254,7 @@
             this.BackColor = System.Drawing.Color.Indigo;
             this.ClientSize = new System.Drawing.Size(1041, 439);
             this.Controls.Add(this.btnImg);
-            this.Controls.Add(this.imagem);
+            this.Controls.Add(this.image);
             this.Controls.Add(this.lblFoto);
             this.Controls.Add(this.Grid);
             this.Controls.Add(this.lblBusca);
@@ -275,7 +277,7 @@
             this.Text = "Principal";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Grid)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imagem)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.image)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -301,7 +303,7 @@
         private System.Windows.Forms.Label lblBusca;
         private System.Windows.Forms.DataGridView Grid;
         private System.Windows.Forms.Label lblFoto;
-        private System.Windows.Forms.PictureBox imagem;
+        private System.Windows.Forms.PictureBox image;
         private System.Windows.Forms.Button btnImg;
     }
 }
