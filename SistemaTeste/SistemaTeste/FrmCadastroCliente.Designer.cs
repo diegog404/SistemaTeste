@@ -1,6 +1,6 @@
 ﻿namespace SistemaTeste
 {
-    partial class FrmPrincipal
+    partial class FrmCadastroCliente
     {
         /// <summary>
         /// Variável de designer necessária.
@@ -247,7 +247,7 @@
             this.btnImg.UseVisualStyleBackColor = true;
             this.btnImg.Click += new System.EventHandler(this.btnImg_Click);
             // 
-            // FrmPrincipal
+            // FrmCadastroCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -273,8 +273,8 @@
             this.Controls.Add(this.lblCpf);
             this.Controls.Add(this.lblEndereco);
             this.Controls.Add(this.lblNome);
-            this.Name = "FrmPrincipal";
-            this.Text = "Principal";
+            this.Name = "FrmCadastroCliente";
+            this.Text = "Cadastro de Clientes";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Grid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.image)).EndInit();

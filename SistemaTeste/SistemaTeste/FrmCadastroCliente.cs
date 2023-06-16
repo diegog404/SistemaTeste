@@ -14,7 +14,7 @@ using System.IO;
 
 namespace SistemaTeste
 {
-    public partial class FrmPrincipal : Form
+    public partial class FrmCadastroCliente : Form
     {
         Conexao conexao = new Conexao();
         string sql;
@@ -24,7 +24,10 @@ namespace SistemaTeste
         //var que recebe a img
         string foto;
 
-        public FrmPrincipal()
+        //var que recebe um cpf já cadastrado
+        string cpfAntigo;
+
+        public FrmCadastroCliente()
         {
             InitializeComponent();
         }
@@ -99,6 +102,25 @@ namespace SistemaTeste
             cmd.Parameters.AddWithValue("@cpf", txtCpf.Text);
             cmd.Parameters.AddWithValue("@telefone", txtTelefone.Text);
             cmd.Parameters.AddWithValue("@imagem", image);
+
+            //verificar existencia do CPF
+            MySqlCommand cmdVerif = new MySqlCommand("SELECT * FROM cliente WHERE cpf = @cpf", conexao.con);
+
+            MySqlDataAdapter da = new MySqlDataAdapter();
+            da.SelectCommand = cmdVerif;
+            cmdVerif.Parameters.AddWithValue("@cpf", txtCpf.Text);
+
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            if(dt.Rows.Count > 0)
+            {
+                MessageBox.Show("CPF já cadastrado", "CPF Existente", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtCpf.Text = "";
+                txtCpf.Focus();
+                return;
+            }
+
             cmd.ExecuteNonQuery();
             conexao.FecharConexao();            
 
@@ -214,6 +236,29 @@ namespace SistemaTeste
             cmd.Parameters.AddWithValue("@endereco", txtEndereco.Text);
             cmd.Parameters.AddWithValue("@cpf", txtCpf.Text);
             cmd.Parameters.AddWithValue("@telefone", txtTelefone.Text);
+
+            //verificar alteração de CPF existente
+
+            if(txtCpf.Text != cpfAntigo)
+            {
+                MySqlCommand cmdVerif = new MySqlCommand("SELECT * FROM cliente WHERE cpf = @cpf", conexao.con);
+
+                MySqlDataAdapter da = new MySqlDataAdapter();
+                da.SelectCommand = cmdVerif;
+                cmdVerif.Parameters.AddWithValue("@cpf", txtCpf.Text);
+
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                if (dt.Rows.Count > 0)
+                {
+                    MessageBox.Show("CPF já cadastrado", "CPF Existente", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtCpf.Text = "";
+                    txtCpf.Focus();
+                    return;
+                }
+            }            
+
             cmd.ExecuteNonQuery();
             conexao.FecharConexao();            
 
@@ -228,21 +273,25 @@ namespace SistemaTeste
 
         private void Grid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if(e.RowIndex > -1)
+            LimparFoto();
+
+            HabilitarBotoes();
+            btnSalvar.Enabled = false;
+            HabilitarCampos();
+
+            id = Grid.CurrentRow.Cells[0].Value.ToString();
+            txtNome.Text = Grid.CurrentRow.Cells[1].Value.ToString();
+            txtEndereco.Text = Grid.CurrentRow.Cells[2].Value.ToString();
+            txtCpf.Text = Grid.CurrentRow.Cells[3].Value.ToString();
+            txtTelefone.Text = Grid.CurrentRow.Cells[4].Value.ToString();
+
+            cpfAntigo = Grid.CurrentRow.Cells[3].Value.ToString();
+
+            /*
+            if (e.RowIndex > -1)
             {
-                LimparFoto();
-
-                HabilitarBotoes();
-                btnSalvar.Enabled = false;
-                HabilitarCampos();
-
-                id = Grid.CurrentRow.Cells[0].Value.ToString();
-                txtNome.Text = Grid.CurrentRow.Cells[1].Value.ToString();
-                txtEndereco.Text = Grid.CurrentRow.Cells[2].Value.ToString();
-                txtCpf.Text = Grid.CurrentRow.Cells[3].Value.ToString();
-                txtTelefone.Text = Grid.CurrentRow.Cells[4].Value.ToString();
-
                 //carrega a foto de um registro salvo
+                
                 if (Grid.CurrentRow.Cells[6].Value != DBNull.Value)
                 {
                     byte[] imageLoad = (byte[])Grid.Rows[e.RowIndex].Cells[6].Value;
@@ -259,6 +308,9 @@ namespace SistemaTeste
             {
                 return;
             }
+                
+            }
+            */
         }
 
         private void BuscarNome()
